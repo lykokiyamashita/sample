@@ -1,0 +1,939 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>おとなのワクチン手帳 | LIFF Mock</title>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    <style>
+      :root {
+        --orange: #ff5a1f;
+        --blue: #1f74d8;
+        --ink: #20242a;
+        --muted: #737b86;
+        --line: #e9edf2;
+        --shadow: 0 20px 60px rgba(19, 31, 45, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        background:
+          radial-gradient(circle at 18% 15%, rgba(255, 111, 37, 0.18), transparent 28%),
+          radial-gradient(circle at 86% 10%, rgba(31, 116, 216, 0.14), transparent 24%),
+          linear-gradient(145deg, #eaf1f6, #f8fafc 42%, #eef3f8);
+        color: var(--ink);
+        font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+      }
+
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      .app-shell {
+        position: relative;
+        width: min(100vw, 430px);
+        min-height: 100svh;
+        max-height: 940px;
+        overflow: hidden;
+        background: #fff;
+        box-shadow: var(--shadow);
+      }
+
+      .app-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        height: 76px;
+        display: grid;
+        grid-template-columns: 44px 1fr 44px;
+        align-items: center;
+        padding: 14px 18px 10px;
+        background: rgba(255, 255, 255, 0.96);
+        border-bottom: 1px solid var(--line);
+        backdrop-filter: blur(14px);
+      }
+
+      .app-header h1 {
+        margin: 0;
+        text-align: center;
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      .app-eyebrow,
+      .section-label {
+        margin: 0 0 3px;
+        color: #6d747c;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .section-label {
+        text-align: left;
+      }
+
+      .icon-button,
+      .bell-button {
+        width: 40px;
+        height: 40px;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--ink);
+        font-size: 28px;
+        line-height: 1;
+      }
+
+      .icon-button.ghost {
+        background: #f6f8fb;
+        font-size: 24px;
+      }
+
+      .bell-button {
+        background: #f7f9fc;
+        font-size: 17px;
+      }
+
+      .screen {
+        display: none;
+        height: calc(100svh - 76px);
+        max-height: 864px;
+        overflow-y: auto;
+        padding: 22px 22px 122px;
+        animation: enter 0.28s ease both;
+      }
+
+      .screen.is-active {
+        display: block;
+      }
+
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .hero-card,
+      .liff-card {
+        margin: 0 -2px 22px;
+        padding: 22px;
+        border-radius: 24px;
+        border: 1px solid #ffe1d4;
+        background:
+          linear-gradient(135deg, rgba(255, 90, 31, 0.1), transparent 58%),
+          #fff7f2;
+      }
+
+      .liff-card {
+        display: grid;
+        grid-template-columns: 54px 1fr;
+        gap: 12px;
+        align-items: center;
+        margin-top: 18px;
+        background: #f7fbff;
+        border-color: #dcecff;
+      }
+
+      .profile-img {
+        width: 54px;
+        height: 54px;
+        border-radius: 50%;
+        background: #eaf3ff;
+        object-fit: cover;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 22px;
+        line-height: 1.35;
+      }
+
+      .hero-card p:last-child,
+      .lead,
+      .form-card p,
+      .liff-card p {
+        margin: 8px 0 0;
+        color: #58606a;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .block-title {
+        margin: 18px 0 10px;
+        font-size: 14px;
+      }
+
+      .disease-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .disease-card,
+      .record-card {
+        width: 100%;
+        min-height: 68px;
+        display: grid;
+        grid-template-columns: 48px 1fr 20px;
+        gap: 12px;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fff;
+        color: inherit;
+        text-align: left;
+      }
+
+      .record-card {
+        grid-template-columns: 48px 1fr;
+        margin-bottom: 10px;
+      }
+
+      .disease-card strong,
+      .record-card strong {
+        display: block;
+        font-size: 14px;
+        line-height: 1.35;
+      }
+
+      .disease-card small,
+      .record-card small {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .vaccine-icon,
+      .record-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        font-size: 21px;
+        background: #f3f6fb;
+      }
+
+      .purple {
+        background: #f1eafe;
+      }
+
+      .red {
+        background: #fff0f2;
+      }
+
+      .blue {
+        background: #eaf3ff;
+      }
+
+      .orange {
+        background: #fff1e9;
+      }
+
+      .chevron {
+        color: var(--muted);
+        font-size: 26px;
+      }
+
+      .text-link {
+        width: 100%;
+        margin: 16px 0 12px;
+        border: 0;
+        background: transparent;
+        color: var(--blue);
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      .info-box {
+        display: grid;
+        grid-template-columns: 34px 1fr;
+        gap: 10px;
+        align-items: start;
+        margin-top: 18px;
+        padding: 14px;
+        border-radius: 14px;
+        background: #eef6ff;
+      }
+
+      .info-box span {
+        width: 28px;
+        height: 28px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--blue);
+        color: #fff;
+        font-weight: 800;
+      }
+
+      .info-box p {
+        margin: 0;
+        color: #4d5965;
+        font-size: 12px;
+        line-height: 1.55;
+      }
+
+      .screen-title-row {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 8px;
+      }
+
+      .screen-title-row > div {
+        grid-column: span 2;
+      }
+
+      .screen-title-row h2 {
+        text-align: center;
+      }
+
+      .tab-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin: 20px 0 18px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .tab {
+        border: 0;
+        background: transparent;
+        padding: 12px 8px;
+        color: var(--muted);
+        font-weight: 800;
+      }
+
+      .tab.is-selected {
+        color: var(--orange);
+        border-bottom: 3px solid var(--orange);
+      }
+
+      .primary-button {
+        width: 100%;
+        min-height: 52px;
+        margin: 16px 0 0;
+        border: 0;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--orange), #ff7a21);
+        color: #fff;
+        font-weight: 900;
+        box-shadow: 0 12px 26px rgba(255, 90, 31, 0.24);
+      }
+
+      .secondary-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .outline-button {
+        min-height: 48px;
+        border: 1.5px solid var(--orange);
+        border-radius: 12px;
+        background: #fff;
+        color: var(--orange);
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .form-card {
+        display: grid;
+        gap: 16px;
+        padding: 18px 0 0;
+      }
+
+      label {
+        display: grid;
+        gap: 8px;
+        color: #30343a;
+        font-size: 14px;
+        font-weight: 800;
+      }
+
+      input,
+      select {
+        width: 100%;
+        height: 52px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 0 14px;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .edit-link {
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      .detail-card,
+      .notice-list,
+      .quick-actions {
+        margin-top: 18px;
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+      }
+
+      .detail-head {
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 14px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      dl {
+        margin: 0;
+      }
+
+      dl div {
+        display: grid;
+        grid-template-columns: 40% 1fr;
+        padding: 14px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      dl div:last-child {
+        border-bottom: 0;
+      }
+
+      dt {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 800;
+      }
+
+      dd {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .button-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .danger {
+        border-color: #ff744e;
+      }
+
+      .notice-panel {
+        position: relative;
+        padding: 22px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #f4f8ff, #e7f1ff);
+        overflow: hidden;
+      }
+
+      .notice-date {
+        margin: 18px 0 8px;
+        color: #53616f;
+        font-size: 13px;
+      }
+
+      .countdown {
+        color: var(--orange);
+        font-size: 18px;
+      }
+
+      .mini-calendar {
+        position: absolute;
+        right: 20px;
+        bottom: 20px;
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: #fff;
+        color: var(--blue);
+        font-size: 28px;
+        box-shadow: 0 12px 24px rgba(31, 116, 216, 0.15);
+      }
+
+      .quick-actions {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .quick-actions button {
+        min-height: 82px;
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: #fbfdff;
+        color: var(--blue);
+        font-size: 11px;
+        font-weight: 900;
+      }
+
+      .bottom-nav {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 20;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        min-height: 78px;
+        padding: 8px 10px max(8px, env(safe-area-inset-bottom));
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.96);
+        backdrop-filter: blur(16px);
+      }
+
+      .nav-item {
+        border: 0;
+        border-radius: 16px;
+        background: transparent;
+        color: #7b838d;
+        font-size: 10px;
+        font-weight: 800;
+      }
+
+      .nav-item span {
+        display: block;
+        margin: 0 auto 3px;
+        font-size: 20px;
+      }
+
+      .nav-item.is-active {
+        color: var(--blue);
+      }
+
+      .nav-primary {
+        color: var(--orange);
+      }
+
+      .nav-primary span {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border: 2px solid var(--orange);
+        border-radius: 50%;
+      }
+
+      @media (min-width: 560px) {
+        body {
+          padding: 28px;
+        }
+
+        .app-shell {
+          min-height: min(100svh - 56px, 900px);
+          border: 10px solid #121417;
+          border-radius: 42px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="app-shell" aria-label="おとなのワクチン手帳">
+      <header class="app-header">
+        <button class="icon-button" type="button" data-close aria-label="閉じる">‹</button>
+        <div>
+          <p class="app-eyebrow">GSK ミニアプリ</p>
+          <h1>おとなのワクチン手帳</h1>
+        </div>
+        <button class="icon-button" type="button" data-share aria-label="シェア">↗</button>
+      </header>
+
+      <section class="screen is-active" data-screen="home" aria-label="ホーム">
+        <div class="hero-card">
+          <p class="section-label">疾患情報</p>
+          <h2>予防できる病気とワクチン</h2>
+          <p>ワクチンで予防できる病気の情報を中央的にお届けします。</p>
+        </div>
+
+        <div class="liff-card">
+          <img id="profile_img" class="profile-img" alt="プロフィール画像" />
+          <div>
+            <strong id="profile_name">ゲスト</strong>
+            <p id="liff_status">LIFFの初期化を確認しています。</p>
+          </div>
+        </div>
+
+        <div class="secondary-row">
+          <button class="outline-button" type="button" data-share>友だちにシェア</button>
+          <button class="outline-button" type="button" data-close>LIFFを閉じる</button>
+        </div>
+
+        <h3 class="block-title">主な疾患の一覧</h3>
+        <div class="disease-list">
+          <button class="disease-card" type="button">
+            <span class="vaccine-icon purple">💉</span>
+            <span>
+              <strong>帯状疱疹</strong>
+              <small>原因や症状、ワクチンの種類など</small>
+            </span>
+            <span class="chevron">›</span>
+          </button>
+          <button class="disease-card" type="button">
+            <span class="vaccine-icon red">🫁</span>
+            <span>
+              <strong>肺炎球菌感染症</strong>
+              <small>原因や症状、ワクチンの種類など</small>
+            </span>
+            <span class="chevron">›</span>
+          </button>
+          <button class="disease-card" type="button">
+            <span class="vaccine-icon blue">🦠</span>
+            <span>
+              <strong>インフルエンザ</strong>
+              <small>原因や症状、ワクチンの種類など</small>
+            </span>
+            <span class="chevron">›</span>
+          </button>
+          <button class="disease-card" type="button">
+            <span class="vaccine-icon orange">☀</span>
+            <span>
+              <strong>新型コロナウイルス感染症</strong>
+              <small>原因や症状、ワクチンの種類など</small>
+            </span>
+            <span class="chevron">›</span>
+          </button>
+        </div>
+
+        <button class="text-link" type="button">すべての疾患を見る</button>
+
+        <aside class="info-box">
+          <span>i</span>
+          <p>本アプリの情報は、厚生労働省等の公的機関の資料に基づいています。</p>
+        </aside>
+      </section>
+
+      <section class="screen" data-screen="records" aria-label="接種記録">
+        <div class="screen-title-row">
+          <div>
+            <p class="section-label">接種記録</p>
+            <h2>接種記録一覧</h2>
+          </div>
+          <button class="bell-button" type="button" data-go="notice" aria-label="通知">🔔</button>
+        </div>
+        <p class="lead">接種したワクチンの記録を一覧で確認できます。</p>
+
+        <div class="tab-row" role="tablist">
+          <button class="tab is-selected" type="button">すべて</button>
+          <button class="tab" type="button">未完了</button>
+        </div>
+
+        <h3 class="block-title">最近の接種記録</h3>
+        <button class="record-card" type="button" data-go="detail">
+          <span class="record-icon orange">💉</span>
+          <span>
+            <strong>不活化ワクチン（帯状疱疹）<br />1回目</strong>
+            <small>2024/04/10　○○クリニック</small>
+          </span>
+        </button>
+        <button class="record-card" type="button" data-go="detail">
+          <span class="record-icon red">💉</span>
+          <span>
+            <strong>不活化ワクチン（インフルエンザ）</strong>
+            <small>2023/10/20　○○クリニック</small>
+          </span>
+        </button>
+        <button class="record-card" type="button" data-go="detail">
+          <span class="record-icon blue">💉</span>
+          <span>
+            <strong>不活化ワクチン（肺炎球菌）</strong>
+            <small>2023/06/15　○○クリニック</small>
+          </span>
+        </button>
+
+        <button class="primary-button" type="button" data-go="add">接種記録を登録する</button>
+
+        <aside class="info-box">
+          <span>i</span>
+          <p>接種の間隔は一般的な接種間隔をもとに表示しています。医師の指示がある場合はそちらを優先してください。</p>
+        </aside>
+      </section>
+
+      <section class="screen" data-screen="add" aria-label="接種記録登録">
+        <div class="screen-title-row">
+          <button class="icon-button ghost" type="button" data-go="records" aria-label="戻る">‹</button>
+          <h2>接種記録を登録する</h2>
+          <button class="icon-button ghost" type="button" data-go="records" aria-label="閉じる">×</button>
+        </div>
+
+        <div class="tab-row">
+          <button class="tab is-selected" type="button">手入力で登録</button>
+          <button class="tab" type="button">OCRで読み取る</button>
+        </div>
+
+        <form class="form-card">
+          <p>接種を受けた情報を入力してください。</p>
+          <label>
+            <span>製品分類</span>
+            <select>
+              <option>選択してください</option>
+              <option>不活化ワクチン</option>
+              <option>生ワクチン</option>
+            </select>
+          </label>
+          <label>
+            <span>接種日</span>
+            <input type="date" />
+          </label>
+          <label>
+            <span>医療機関（任意）</span>
+            <input type="text" placeholder="例）○○クリニック" />
+          </label>
+          <label>
+            <span>接種部位（任意）</span>
+            <input type="text" placeholder="例）左上腕" />
+          </label>
+          <label>
+            <span>ロット番号（任意）</span>
+            <input type="text" placeholder="例）AB1234" />
+          </label>
+          <button class="primary-button" type="button" data-go="detail">登録して詳細を見る</button>
+        </form>
+      </section>
+
+      <section class="screen" data-screen="detail" aria-label="接種記録詳細">
+        <div class="screen-title-row">
+          <button class="icon-button ghost" type="button" data-go="records" aria-label="戻る">‹</button>
+          <h2>接種記録詳細</h2>
+          <button class="edit-link" type="button" data-go="add">編集</button>
+        </div>
+
+        <article class="detail-card">
+          <div class="detail-head">
+            <span class="record-icon blue">🗓</span>
+            <strong>不活化ワクチン<br />（帯状疱疹）<br />1回目</strong>
+          </div>
+          <dl>
+            <div><dt>接種日</dt><dd>2024/04/10</dd></div>
+            <div><dt>医療機関</dt><dd>○○クリニック</dd></div>
+            <div><dt>製品分類</dt><dd>不活化ワクチン</dd></div>
+            <div><dt>接種部位</dt><dd>左上腕</dd></div>
+            <div><dt>ロット番号</dt><dd>AB1234</dd></div>
+            <div><dt>メモ</dt><dd>特になし</dd></div>
+          </dl>
+        </article>
+
+        <div class="button-grid">
+          <button class="outline-button" type="button" data-go="add">記録を編集する</button>
+          <button class="outline-button danger" type="button">記録を削除する</button>
+        </div>
+      </section>
+
+      <section class="screen" data-screen="notice" aria-label="リマインド通知">
+        <div class="notice-panel">
+          <p class="section-label">リマインド通知</p>
+          <h2>帯状疱疹ワクチン<br />2回目の接種日が近づいています</h2>
+          <p class="notice-date">予定日：2024/06/10（月）</p>
+          <strong class="countdown">あと23日です</strong>
+          <div class="mini-calendar">✓</div>
+        </div>
+
+        <div class="notice-list">
+          <h3>接種予定の詳細</h3>
+          <dl>
+            <div><dt>ワクチン名</dt><dd>帯状疱疹ワクチン</dd></div>
+            <div><dt>回数</dt><dd>2回目（全2回）</dd></div>
+            <div><dt>予定日</dt><dd>2024/06/10（月）</dd></div>
+            <div><dt>接種医療機関</dt><dd>○○クリニック</dd></div>
+          </dl>
+        </div>
+
+        <div class="quick-actions">
+          <button type="button">予定を確認する</button>
+          <button type="button">医療機関を確認する</button>
+          <button type="button">ワクチン手帳を開く</button>
+        </div>
+      </section>
+
+      <nav class="bottom-nav" aria-label="下部ナビゲーション">
+        <button class="nav-item is-active" type="button" data-go="home">
+          <span>⌂</span>
+          ホーム
+        </button>
+        <button class="nav-item" type="button" data-go="records">
+          <span>▤</span>
+          記録一覧
+        </button>
+        <button class="nav-item nav-primary" type="button" data-go="add">
+          <span>✎</span>
+          記録する
+        </button>
+        <button class="nav-item" type="button" data-go="notice">
+          <span>i</span>
+          お知らせ
+        </button>
+      </nav>
+    </main>
+
+    <script>
+      const LIFF_ID = "YOUR_LIFF_ID";
+      const screens = Array.from(document.querySelectorAll(".screen"));
+      const navItems = Array.from(document.querySelectorAll(".nav-item"));
+      const goButtons = Array.from(document.querySelectorAll("[data-go]"));
+      const profileName = document.getElementById("profile_name");
+      const profileImg = document.getElementById("profile_img");
+      const liffStatus = document.getElementById("liff_status");
+
+      function showScreen(name) {
+        screens.forEach((screen) => {
+          screen.classList.toggle("is-active", screen.dataset.screen === name);
+          if (screen.dataset.screen === name) {
+            screen.scrollTop = 0;
+          }
+        });
+
+        navItems.forEach((item) => {
+          item.classList.toggle("is-active", item.dataset.go === name);
+        });
+      }
+
+      goButtons.forEach((button) => {
+        button.addEventListener("click", () => showScreen(button.dataset.go));
+      });
+
+      document.querySelectorAll(".disease-card").forEach((card) => {
+        card.addEventListener("click", () => showScreen("records"));
+      });
+
+      async function initLiff() {
+        if (!window.liff) {
+          liffStatus.textContent = "LIFF SDKを読み込めませんでした。通常のWebページとして表示しています。";
+          return;
+        }
+
+        if (LIFF_ID === "YOUR_LIFF_ID") {
+          liffStatus.textContent = "LINE Developersで作成したLIFF IDをコード内の LIFF_ID に設定してください。";
+          return;
+        }
+
+        try {
+          await liff.init({ liffId: LIFF_ID });
+
+          if (!liff.isLoggedIn()) {
+            liff.login();
+            return;
+          }
+
+          const profile = await liff.getProfile();
+          profileName.textContent = profile.displayName;
+          profileImg.src = profile.pictureUrl || "";
+          liffStatus.textContent = liff.isInClient()
+            ? "LINE内でログイン済みです。"
+            : "ブラウザでログイン済みです。";
+        } catch (error) {
+          console.error(error);
+          liffStatus.textContent = "LIFFの初期化でエラーが発生しました。LIFF IDとエンドポイントURLを確認してください。";
+        }
+      }
+
+      function closeWindow() {
+        if (window.liff && liff.isInClient()) {
+          liff.closeWindow();
+        } else {
+          alert("LINEアプリ内で開くと、このボタンでLIFFを閉じられます。");
+        }
+      }
+
+      function shareFriends() {
+        const liffUrl = LIFF_ID === "YOUR_LIFF_ID"
+          ? location.href
+          : `https://liff.line.me/${LIFF_ID}`;
+
+        if (!window.liff || !liff.isApiAvailable("shareTargetPicker")) {
+          alert("LINEアプリ内で開くと、友だちへのシェアを試せます。");
+          return;
+        }
+
+        liff.shareTargetPicker([
+          {
+            type: "flex",
+            altText: "おとなのワクチン手帳がシェアされました。",
+            contents: {
+              type: "bubble",
+              body: {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "text",
+                    text: "おとなのワクチン手帳",
+                    weight: "bold",
+                    size: "xl"
+                  },
+                  {
+                    type: "text",
+                    text: "ワクチンの記録・予定をLINEから確認できます。",
+                    wrap: true,
+                    color: "#666666",
+                    margin: "md"
+                  }
+                ]
+              },
+              footer: {
+                type: "box",
+                layout: "vertical",
+                contents: [
+                  {
+                    type: "button",
+                    style: "primary",
+                    color: "#ff5a1f",
+                    action: {
+                      type: "uri",
+                      label: "開く",
+                      uri: liffUrl
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]).catch((error) => {
+          alert(`シェア機能でエラーが起こりました：${error}`);
+        });
+      }
+
+      document.querySelectorAll("[data-close]").forEach((button) => {
+        button.addEventListener("click", closeWindow);
+      });
+
+      document.querySelectorAll("[data-share]").forEach((button) => {
+        button.addEventListener("click", shareFriends);
+      });
+
+      showScreen("home");
+      initLiff();
+    </script>
+  </body>
+</html>
