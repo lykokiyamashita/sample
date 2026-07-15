@@ -132,8 +132,7 @@
         }
       }
 
-      .hero-card,
-      .liff-card {
+      .hero-card {
         margin: 0 -2px 22px;
         padding: 22px;
         border-radius: 24px;
@@ -141,24 +140,6 @@
         background:
           linear-gradient(135deg, rgba(255, 90, 31, 0.1), transparent 58%),
           #fff7f2;
-      }
-
-      .liff-card {
-        display: grid;
-        grid-template-columns: 54px 1fr;
-        gap: 12px;
-        align-items: center;
-        margin-top: 18px;
-        background: #f7fbff;
-        border-color: #dcecff;
-      }
-
-      .profile-img {
-        width: 54px;
-        height: 54px;
-        border-radius: 50%;
-        background: #eaf3ff;
-        object-fit: cover;
       }
 
       h2 {
@@ -170,7 +151,7 @@
       .hero-card p:last-child,
       .lead,
       .form-card p,
-      .liff-card p {
+      .disease-description p {
         margin: 8px 0 0;
         color: #58606a;
         font-size: 14px;
@@ -192,7 +173,7 @@
         width: 100%;
         min-height: 68px;
         display: grid;
-        grid-template-columns: 48px 1fr 20px;
+        grid-template-columns: 48px 1fr;
         gap: 12px;
         align-items: center;
         padding: 12px;
@@ -250,11 +231,6 @@
         background: #fff1e9;
       }
 
-      .chevron {
-        color: var(--muted);
-        font-size: 26px;
-      }
-
       .text-link {
         width: 100%;
         margin: 16px 0 12px;
@@ -295,15 +271,8 @@
       }
 
       .screen-title-row {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        gap: 12px;
-        align-items: center;
+        display: block;
         margin-bottom: 8px;
-      }
-
-      .screen-title-row > div {
-        grid-column: span 2;
       }
 
       .screen-title-row h2 {
@@ -340,13 +309,6 @@
         color: #fff;
         font-weight: 900;
         box-shadow: 0 12px 26px rgba(255, 90, 31, 0.24);
-      }
-
-      .secondary-row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-        margin-top: 10px;
       }
 
       .outline-button {
@@ -393,6 +355,7 @@
       }
 
       .detail-card,
+      .disease-description,
       .notice-list,
       .quick-actions {
         margin-top: 18px;
@@ -410,6 +373,18 @@
         margin-bottom: 14px;
         padding-bottom: 16px;
         border-bottom: 1px solid var(--line);
+      }
+
+      .disease-description {
+        display: grid;
+        gap: 14px;
+      }
+
+      .disease-description .vaccine-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 18px;
+        font-size: 26px;
       }
 
       dl {
@@ -563,12 +538,12 @@
   <body>
     <main class="app-shell" aria-label="おとなのワクチン手帳">
       <header class="app-header">
-        <button class="icon-button" type="button" data-close aria-label="閉じる">‹</button>
+        <span aria-hidden="true"></span>
         <div>
           <p class="app-eyebrow">GSK ミニアプリ</p>
           <h1>おとなのワクチン手帳</h1>
         </div>
-        <button class="icon-button" type="button" data-share aria-label="シェア">↗</button>
+        <span aria-hidden="true"></span>
       </header>
 
       <section class="screen is-active" data-screen="home" aria-label="ホーム">
@@ -578,52 +553,35 @@
           <p>ワクチンで予防できる病気の情報を中央的にお届けします。</p>
         </div>
 
-        <div class="liff-card">
-          <img id="profile_img" class="profile-img" alt="プロフィール画像" />
-          <div>
-            <strong id="profile_name">ゲスト</strong>
-            <p id="liff_status">LIFFの初期化を確認しています。</p>
-          </div>
-        </div>
-
-        <div class="secondary-row">
-          <button class="outline-button" type="button" data-share>友だちにシェア</button>
-          <button class="outline-button" type="button" data-close>LIFFを閉じる</button>
-        </div>
-
         <h3 class="block-title">主な疾患の一覧</h3>
         <div class="disease-list">
-          <button class="disease-card" type="button">
+          <button class="disease-card" type="button" data-disease="shingles">
             <span class="vaccine-icon purple">💉</span>
             <span>
               <strong>帯状疱疹</strong>
-              <small>原因や症状、ワクチンの種類など</small>
+              <small>原因や症状の概要</small>
             </span>
-            <span class="chevron">›</span>
           </button>
-          <button class="disease-card" type="button">
+          <button class="disease-card" type="button" data-disease="pneumococcus">
             <span class="vaccine-icon red">🫁</span>
             <span>
               <strong>肺炎球菌感染症</strong>
-              <small>原因や症状、ワクチンの種類など</small>
+              <small>原因や症状の概要</small>
             </span>
-            <span class="chevron">›</span>
           </button>
-          <button class="disease-card" type="button">
+          <button class="disease-card" type="button" data-disease="influenza">
             <span class="vaccine-icon blue">🦠</span>
             <span>
               <strong>インフルエンザ</strong>
-              <small>原因や症状、ワクチンの種類など</small>
+              <small>原因や症状の概要</small>
             </span>
-            <span class="chevron">›</span>
           </button>
-          <button class="disease-card" type="button">
+          <button class="disease-card" type="button" data-disease="covid">
             <span class="vaccine-icon orange">☀</span>
             <span>
               <strong>新型コロナウイルス感染症</strong>
-              <small>原因や症状、ワクチンの種類など</small>
+              <small>原因や症状の概要</small>
             </span>
-            <span class="chevron">›</span>
           </button>
         </div>
 
@@ -633,6 +591,20 @@
           <span>i</span>
           <p>本アプリの情報は、厚生労働省等の公的機関の資料に基づいています。</p>
         </aside>
+      </section>
+
+      <section class="screen" data-screen="disease-detail" aria-label="疾患説明">
+        <div class="screen-title-row">
+          <p class="section-label">疾患情報</p>
+          <h2 id="disease_title">帯状疱疹</h2>
+        </div>
+
+        <article class="disease-description">
+          <span id="disease_icon" class="vaccine-icon purple">💉</span>
+          <p id="disease_text">
+            水ぼうそうと同じウイルスが再活性化して起こる疾患です。体の左右どちらかに痛みや発疹が出ることがあります。
+          </p>
+        </article>
       </section>
 
       <section class="screen" data-screen="records" aria-label="接種記録">
@@ -683,9 +655,7 @@
 
       <section class="screen" data-screen="add" aria-label="接種記録登録">
         <div class="screen-title-row">
-          <button class="icon-button ghost" type="button" data-go="records" aria-label="戻る">‹</button>
           <h2>接種記録を登録する</h2>
-          <button class="icon-button ghost" type="button" data-go="records" aria-label="閉じる">×</button>
         </div>
 
         <div class="tab-row">
@@ -725,9 +695,7 @@
 
       <section class="screen" data-screen="detail" aria-label="接種記録詳細">
         <div class="screen-title-row">
-          <button class="icon-button ghost" type="button" data-go="records" aria-label="戻る">‹</button>
           <h2>接種記録詳細</h2>
-          <button class="edit-link" type="button" data-go="add">編集</button>
         </div>
 
         <article class="detail-card">
@@ -802,9 +770,36 @@
       const screens = Array.from(document.querySelectorAll(".screen"));
       const navItems = Array.from(document.querySelectorAll(".nav-item"));
       const goButtons = Array.from(document.querySelectorAll("[data-go]"));
-      const profileName = document.getElementById("profile_name");
-      const profileImg = document.getElementById("profile_img");
-      const liffStatus = document.getElementById("liff_status");
+      const diseaseTitle = document.getElementById("disease_title");
+      const diseaseIcon = document.getElementById("disease_icon");
+      const diseaseText = document.getElementById("disease_text");
+
+      const diseaseDetails = {
+        shingles: {
+          title: "帯状疱疹",
+          icon: "💉",
+          color: "purple",
+          text: "水ぼうそうと同じウイルスが再活性化して起こる疾患です。体の左右どちらかに痛みや発疹が出ることがあります。"
+        },
+        pneumococcus: {
+          title: "肺炎球菌感染症",
+          icon: "🫁",
+          color: "red",
+          text: "肺炎球菌という細菌が原因で起こる感染症です。肺炎のほか、中耳炎や髄膜炎などにつながることがあります。"
+        },
+        influenza: {
+          title: "インフルエンザ",
+          icon: "🦠",
+          color: "blue",
+          text: "インフルエンザウイルスによる感染症です。発熱、倦怠感、関節痛、咳などの症状が急に出ることがあります。"
+        },
+        covid: {
+          title: "新型コロナウイルス感染症",
+          icon: "☀",
+          color: "orange",
+          text: "新型コロナウイルスによる感染症です。発熱、咳、のどの痛み、倦怠感などがみられることがあります。"
+        }
+      };
 
       function showScreen(name) {
         screens.forEach((screen) => {
@@ -824,116 +819,21 @@
       });
 
       document.querySelectorAll(".disease-card").forEach((card) => {
-        card.addEventListener("click", () => showScreen("records"));
-      });
-
-      async function initLiff() {
-        if (!window.liff) {
-          liffStatus.textContent = "LIFF SDKを読み込めませんでした。通常のWebページとして表示しています。";
-          return;
-        }
-
-        if (LIFF_ID === "YOUR_LIFF_ID") {
-          liffStatus.textContent = "LINE Developersで作成したLIFF IDをコード内の LIFF_ID に設定してください。";
-          return;
-        }
-
-        try {
-          await liff.init({ liffId: LIFF_ID });
-
-          if (!liff.isLoggedIn()) {
-            liff.login();
+        card.addEventListener("click", () => {
+          const detail = diseaseDetails[card.dataset.disease];
+          if (!detail) {
             return;
           }
 
-          const profile = await liff.getProfile();
-          profileName.textContent = profile.displayName;
-          profileImg.src = profile.pictureUrl || "";
-          liffStatus.textContent = liff.isInClient()
-            ? "LINE内でログイン済みです。"
-            : "ブラウザでログイン済みです。";
-        } catch (error) {
-          console.error(error);
-          liffStatus.textContent = "LIFFの初期化でエラーが発生しました。LIFF IDとエンドポイントURLを確認してください。";
-        }
-      }
-
-      function closeWindow() {
-        if (window.liff && liff.isInClient()) {
-          liff.closeWindow();
-        } else {
-          alert("LINEアプリ内で開くと、このボタンでLIFFを閉じられます。");
-        }
-      }
-
-      function shareFriends() {
-        const liffUrl = LIFF_ID === "YOUR_LIFF_ID"
-          ? location.href
-          : `https://liff.line.me/${LIFF_ID}`;
-
-        if (!window.liff || !liff.isApiAvailable("shareTargetPicker")) {
-          alert("LINEアプリ内で開くと、友だちへのシェアを試せます。");
-          return;
-        }
-
-        liff.shareTargetPicker([
-          {
-            type: "flex",
-            altText: "おとなのワクチン手帳がシェアされました。",
-            contents: {
-              type: "bubble",
-              body: {
-                type: "box",
-                layout: "vertical",
-                contents: [
-                  {
-                    type: "text",
-                    text: "おとなのワクチン手帳",
-                    weight: "bold",
-                    size: "xl"
-                  },
-                  {
-                    type: "text",
-                    text: "ワクチンの記録・予定をLINEから確認できます。",
-                    wrap: true,
-                    color: "#666666",
-                    margin: "md"
-                  }
-                ]
-              },
-              footer: {
-                type: "box",
-                layout: "vertical",
-                contents: [
-                  {
-                    type: "button",
-                    style: "primary",
-                    color: "#ff5a1f",
-                    action: {
-                      type: "uri",
-                      label: "開く",
-                      uri: liffUrl
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        ]).catch((error) => {
-          alert(`シェア機能でエラーが起こりました：${error}`);
+          diseaseTitle.textContent = detail.title;
+          diseaseIcon.textContent = detail.icon;
+          diseaseIcon.className = `vaccine-icon ${detail.color}`;
+          diseaseText.textContent = detail.text;
+          showScreen("disease-detail");
         });
-      }
-
-      document.querySelectorAll("[data-close]").forEach((button) => {
-        button.addEventListener("click", closeWindow);
-      });
-
-      document.querySelectorAll("[data-share]").forEach((button) => {
-        button.addEventListener("click", shareFriends);
       });
 
       showScreen("home");
-      initLiff();
     </script>
   </body>
 </html>
