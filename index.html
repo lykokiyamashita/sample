@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ja">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>おとなのワクチン手帳 | LIFF Mock</title>
+    <title>Adult Vaccine Handbook | LIFF Mock</title>
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <style>
       :root {
@@ -536,231 +536,231 @@
     </style>
   </head>
   <body>
-    <main class="app-shell" aria-label="おとなのワクチン手帳">
+    <main class="app-shell" aria-label="Adult Vaccine Handbook">
       <header class="app-header">
         <span aria-hidden="true"></span>
         <div>
-          <p class="app-eyebrow">GSK ミニアプリ</p>
-          <h1>おとなのワクチン手帳</h1>
+          <p class="app-eyebrow">GSK Mini App</p>
+          <h1>Adult Vaccine Handbook</h1>
         </div>
         <span aria-hidden="true"></span>
       </header>
 
-      <section class="screen is-active" data-screen="home" aria-label="ホーム">
+      <section class="screen is-active" data-screen="home" aria-label="Home">
         <div class="hero-card">
-          <p class="section-label">疾患情報</p>
-          <h2>予防できる病気とワクチン</h2>
-          <p>ワクチンで予防できる病気の情報を中央的にお届けします。</p>
+          <p class="section-label">Disease Information</p>
+          <h2>Vaccine-preventable diseases</h2>
+          <p>A simple place to learn about diseases that can be prevented through vaccination.</p>
         </div>
 
-        <h3 class="block-title">主な疾患の一覧</h3>
+        <h3 class="block-title">Common diseases</h3>
         <div class="disease-list">
           <button class="disease-card" type="button" data-disease="shingles">
             <span class="vaccine-icon purple">💉</span>
             <span>
-              <strong>帯状疱疹</strong>
-              <small>原因や症状の概要</small>
+              <strong>Shingles</strong>
+              <small>Overview of causes and symptoms</small>
             </span>
           </button>
           <button class="disease-card" type="button" data-disease="pneumococcus">
             <span class="vaccine-icon red">🫁</span>
             <span>
-              <strong>肺炎球菌感染症</strong>
-              <small>原因や症状の概要</small>
+              <strong>Pneumococcal disease</strong>
+              <small>Overview of causes and symptoms</small>
             </span>
           </button>
           <button class="disease-card" type="button" data-disease="influenza">
             <span class="vaccine-icon blue">🦠</span>
             <span>
-              <strong>インフルエンザ</strong>
-              <small>原因や症状の概要</small>
+              <strong>Influenza</strong>
+              <small>Overview of causes and symptoms</small>
             </span>
           </button>
           <button class="disease-card" type="button" data-disease="covid">
             <span class="vaccine-icon orange">☀</span>
             <span>
-              <strong>新型コロナウイルス感染症</strong>
-              <small>原因や症状の概要</small>
+              <strong>COVID-19</strong>
+              <small>Overview of causes and symptoms</small>
             </span>
           </button>
         </div>
 
-        <button class="text-link" type="button">すべての疾患を見る</button>
+        <button class="text-link" type="button">View all diseases</button>
 
         <aside class="info-box">
           <span>i</span>
-          <p>本アプリの情報は、厚生労働省等の公的機関の資料に基づいています。</p>
+          <p>The information in this app is based on materials from public health authorities and related sources.</p>
         </aside>
       </section>
 
-      <section class="screen" data-screen="disease-detail" aria-label="疾患説明">
+      <section class="screen" data-screen="disease-detail" aria-label="Disease description">
         <div class="screen-title-row">
-          <p class="section-label">疾患情報</p>
-          <h2 id="disease_title">帯状疱疹</h2>
+          <p class="section-label">Disease Information</p>
+          <h2 id="disease_title">Shingles</h2>
         </div>
 
         <article class="disease-description">
           <span id="disease_icon" class="vaccine-icon purple">💉</span>
           <p id="disease_text">
-            水ぼうそうと同じウイルスが再活性化して起こる疾患です。体の左右どちらかに痛みや発疹が出ることがあります。
+            Shingles is caused by the reactivation of the same virus that causes chickenpox. It may cause pain and a rash on one side of the body.
           </p>
         </article>
       </section>
 
-      <section class="screen" data-screen="records" aria-label="接種記録">
+      <section class="screen" data-screen="records" aria-label="Vaccination records">
         <div class="screen-title-row">
           <div>
-            <p class="section-label">接種記録</p>
-            <h2>接種記録一覧</h2>
+            <p class="section-label">Vaccination Records</p>
+            <h2>Your vaccination records</h2>
           </div>
-          <button class="bell-button" type="button" data-go="notice" aria-label="通知">🔔</button>
+          <button class="bell-button" type="button" data-go="notice" aria-label="Notifications">🔔</button>
         </div>
-        <p class="lead">接種したワクチンの記録を一覧で確認できます。</p>
+        <p class="lead">Review the vaccines you have received in one simple list.</p>
 
         <div class="tab-row" role="tablist">
-          <button class="tab is-selected" type="button">すべて</button>
-          <button class="tab" type="button">未完了</button>
+          <button class="tab is-selected" type="button">All</button>
+          <button class="tab" type="button">Pending</button>
         </div>
 
-        <h3 class="block-title">最近の接種記録</h3>
+        <h3 class="block-title">Recent records</h3>
         <button class="record-card" type="button" data-go="detail">
           <span class="record-icon orange">💉</span>
           <span>
-            <strong>不活化ワクチン（帯状疱疹）<br />1回目</strong>
-            <small>2024/04/10　○○クリニック</small>
+            <strong>Inactivated vaccine<br />for shingles<br />Dose 1</strong>
+            <small>2024/04/10　ABC Clinic</small>
           </span>
         </button>
         <button class="record-card" type="button" data-go="detail">
           <span class="record-icon red">💉</span>
           <span>
-            <strong>不活化ワクチン（インフルエンザ）</strong>
-            <small>2023/10/20　○○クリニック</small>
+            <strong>Inactivated vaccine<br />for influenza</strong>
+            <small>2023/10/20　ABC Clinic</small>
           </span>
         </button>
         <button class="record-card" type="button" data-go="detail">
           <span class="record-icon blue">💉</span>
           <span>
-            <strong>不活化ワクチン（肺炎球菌）</strong>
-            <small>2023/06/15　○○クリニック</small>
+            <strong>Inactivated vaccine<br />for pneumococcal disease</strong>
+            <small>2023/06/15　ABC Clinic</small>
           </span>
         </button>
 
-        <button class="primary-button" type="button" data-go="add">接種記録を登録する</button>
+        <button class="primary-button" type="button" data-go="add">Add a vaccination record</button>
 
         <aside class="info-box">
           <span>i</span>
-          <p>接種の間隔は一般的な接種間隔をもとに表示しています。医師の指示がある場合はそちらを優先してください。</p>
+          <p>Timing guidance is based on common vaccination intervals. If your doctor has given you specific instructions, please follow those first.</p>
         </aside>
       </section>
 
-      <section class="screen" data-screen="add" aria-label="接種記録登録">
+      <section class="screen" data-screen="add" aria-label="Add vaccination record">
         <div class="screen-title-row">
-          <h2>接種記録を登録する</h2>
+          <h2>Add a vaccination record</h2>
         </div>
 
         <div class="tab-row">
-          <button class="tab is-selected" type="button">手入力で登録</button>
-          <button class="tab" type="button">OCRで読み取る</button>
+          <button class="tab is-selected" type="button">Manual entry</button>
+          <button class="tab" type="button">Scan with OCR</button>
         </div>
 
         <form class="form-card">
-          <p>接種を受けた情報を入力してください。</p>
+          <p>Enter the details of the vaccination you received.</p>
           <label>
-            <span>製品分類</span>
+            <span>Product category</span>
             <select>
-              <option>選択してください</option>
-              <option>不活化ワクチン</option>
-              <option>生ワクチン</option>
+              <option>Please select</option>
+              <option>Inactivated vaccine</option>
+              <option>Live vaccine</option>
             </select>
           </label>
           <label>
-            <span>接種日</span>
+            <span>Vaccination date</span>
             <input type="date" />
           </label>
           <label>
-            <span>医療機関（任意）</span>
-            <input type="text" placeholder="例）○○クリニック" />
+            <span>Medical institution (optional)</span>
+            <input type="text" placeholder="Example: ABC Clinic" />
           </label>
           <label>
-            <span>接種部位（任意）</span>
-            <input type="text" placeholder="例）左上腕" />
+            <span>Injection site (optional)</span>
+            <input type="text" placeholder="Example: Left upper arm" />
           </label>
           <label>
-            <span>ロット番号（任意）</span>
-            <input type="text" placeholder="例）AB1234" />
+            <span>Lot number (optional)</span>
+            <input type="text" placeholder="Example: AB1234" />
           </label>
-          <button class="primary-button" type="button" data-go="detail">登録して詳細を見る</button>
+          <button class="primary-button" type="button" data-go="detail">Save and view details</button>
         </form>
       </section>
 
-      <section class="screen" data-screen="detail" aria-label="接種記録詳細">
+      <section class="screen" data-screen="detail" aria-label="Vaccination record details">
         <div class="screen-title-row">
-          <h2>接種記録詳細</h2>
+          <h2>Vaccination record details</h2>
         </div>
 
         <article class="detail-card">
           <div class="detail-head">
             <span class="record-icon blue">🗓</span>
-            <strong>不活化ワクチン<br />（帯状疱疹）<br />1回目</strong>
+            <strong>Inactivated vaccine<br />for shingles<br />Dose 1</strong>
           </div>
           <dl>
-            <div><dt>接種日</dt><dd>2024/04/10</dd></div>
-            <div><dt>医療機関</dt><dd>○○クリニック</dd></div>
-            <div><dt>製品分類</dt><dd>不活化ワクチン</dd></div>
-            <div><dt>接種部位</dt><dd>左上腕</dd></div>
-            <div><dt>ロット番号</dt><dd>AB1234</dd></div>
-            <div><dt>メモ</dt><dd>特になし</dd></div>
+            <div><dt>Date</dt><dd>2024/04/10</dd></div>
+            <div><dt>Clinic</dt><dd>ABC Clinic</dd></div>
+            <div><dt>Category</dt><dd>Inactivated vaccine</dd></div>
+            <div><dt>Injection site</dt><dd>Left upper arm</dd></div>
+            <div><dt>Lot number</dt><dd>AB1234</dd></div>
+            <div><dt>Memo</dt><dd>No notes</dd></div>
           </dl>
         </article>
 
         <div class="button-grid">
-          <button class="outline-button" type="button" data-go="add">記録を編集する</button>
-          <button class="outline-button danger" type="button">記録を削除する</button>
+          <button class="outline-button" type="button" data-go="add">Edit record</button>
+          <button class="outline-button danger" type="button">Delete record</button>
         </div>
       </section>
 
-      <section class="screen" data-screen="notice" aria-label="リマインド通知">
+      <section class="screen" data-screen="notice" aria-label="Reminder notification">
         <div class="notice-panel">
-          <p class="section-label">リマインド通知</p>
-          <h2>帯状疱疹ワクチン<br />2回目の接種日が近づいています</h2>
-          <p class="notice-date">予定日：2024/06/10（月）</p>
-          <strong class="countdown">あと23日です</strong>
+          <p class="section-label">Reminder</p>
+          <h2>Your second shingles vaccine dose is coming up</h2>
+          <p class="notice-date">Scheduled date: 2024/06/10 (Mon)</p>
+          <strong class="countdown">23 days remaining</strong>
           <div class="mini-calendar">✓</div>
         </div>
 
         <div class="notice-list">
-          <h3>接種予定の詳細</h3>
+          <h3>Upcoming vaccination details</h3>
           <dl>
-            <div><dt>ワクチン名</dt><dd>帯状疱疹ワクチン</dd></div>
-            <div><dt>回数</dt><dd>2回目（全2回）</dd></div>
-            <div><dt>予定日</dt><dd>2024/06/10（月）</dd></div>
-            <div><dt>接種医療機関</dt><dd>○○クリニック</dd></div>
+            <div><dt>Vaccine</dt><dd>Shingles vaccine</dd></div>
+            <div><dt>Dose</dt><dd>Dose 2 of 2</dd></div>
+            <div><dt>Date</dt><dd>2024/06/10 (Mon)</dd></div>
+            <div><dt>Clinic</dt><dd>ABC Clinic</dd></div>
           </dl>
         </div>
 
         <div class="quick-actions">
-          <button type="button">予定を確認する</button>
-          <button type="button">医療機関を確認する</button>
-          <button type="button">ワクチン手帳を開く</button>
+          <button type="button">Review schedule</button>
+          <button type="button">Check clinic</button>
+          <button type="button">Open handbook</button>
         </div>
       </section>
 
-      <nav class="bottom-nav" aria-label="下部ナビゲーション">
+      <nav class="bottom-nav" aria-label="Bottom navigation">
         <button class="nav-item is-active" type="button" data-go="home">
           <span>⌂</span>
-          ホーム
+          Home
         </button>
         <button class="nav-item" type="button" data-go="records">
           <span>▤</span>
-          記録一覧
+          Records
         </button>
         <button class="nav-item nav-primary" type="button" data-go="add">
           <span>✎</span>
-          記録する
+          Add
         </button>
         <button class="nav-item" type="button" data-go="notice">
           <span>i</span>
-          お知らせ
+          Notice
         </button>
       </nav>
     </main>
@@ -776,28 +776,28 @@
 
       const diseaseDetails = {
         shingles: {
-          title: "帯状疱疹",
+          title: "Shingles",
           icon: "💉",
           color: "purple",
-          text: "水ぼうそうと同じウイルスが再活性化して起こる疾患です。体の左右どちらかに痛みや発疹が出ることがあります。"
+          text: "Shingles is caused by the reactivation of the same virus that causes chickenpox. It may cause pain and a rash on one side of the body."
         },
         pneumococcus: {
-          title: "肺炎球菌感染症",
+          title: "Pneumococcal disease",
           icon: "🫁",
           color: "red",
-          text: "肺炎球菌という細菌が原因で起こる感染症です。肺炎のほか、中耳炎や髄膜炎などにつながることがあります。"
+          text: "Pneumococcal disease is caused by bacteria called pneumococcus. It can lead to conditions such as pneumonia, middle ear infections, or meningitis."
         },
         influenza: {
-          title: "インフルエンザ",
+          title: "Influenza",
           icon: "🦠",
           color: "blue",
-          text: "インフルエンザウイルスによる感染症です。発熱、倦怠感、関節痛、咳などの症状が急に出ることがあります。"
+          text: "Influenza is an infection caused by influenza viruses. Symptoms such as fever, fatigue, joint pain, and cough can appear suddenly."
         },
         covid: {
-          title: "新型コロナウイルス感染症",
+          title: "COVID-19",
           icon: "☀",
           color: "orange",
-          text: "新型コロナウイルスによる感染症です。発熱、咳、のどの痛み、倦怠感などがみられることがあります。"
+          text: "COVID-19 is an infection caused by the coronavirus. It may involve symptoms such as fever, cough, sore throat, and fatigue."
         }
       };
 
