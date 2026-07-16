@@ -60,8 +60,7 @@
         text-align: left;
       }
 
-      .icon-button,
-      .bell-button {
+      .icon-button {
         width: 40px;
         height: 40px;
         border: 0;
@@ -75,11 +74,6 @@
       .icon-button.ghost {
         background: #f6f8fb;
         font-size: 24px;
-      }
-
-      .bell-button {
-        background: #f7f9fc;
-        font-size: 17px;
       }
 
       .screen {
@@ -272,7 +266,7 @@
       }
 
       .screen-title-row h2 {
-        text-align: center;
+        text-align: left;
       }
 
       .tab-row {
@@ -636,11 +630,8 @@
 
       <section class="screen" data-screen="records" aria-label="Vaccination records">
         <div class="screen-title-row">
-          <div>
-            <p class="section-label">Vaccination Records</p>
-            <h2>Your vaccination records</h2>
-          </div>
-          <button class="bell-button" type="button" data-go="notice" aria-label="Notifications">🔔</button>
+          <p class="section-label">Vaccination Records</p>
+          <h2>Your vaccination records</h2>
         </div>
         <p class="lead">Review the vaccines you have received in one simple list.</p>
 
