@@ -195,6 +195,11 @@
         margin-bottom: 10px;
       }
 
+      .record-card.is-draft {
+        border-color: #dcecff;
+        background: #fbfdff;
+      }
+
       .disease-card strong,
       .record-card strong {
         display: block;
@@ -208,6 +213,19 @@
         margin-top: 4px;
         color: var(--muted);
         font-size: 11px;
+      }
+
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        width: fit-content;
+        margin-bottom: 6px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: #eef6ff;
+        color: var(--blue);
+        font-size: 10px;
+        font-weight: 900;
       }
 
       .vaccine-icon,
@@ -618,32 +636,46 @@
         <p class="lead">Review the vaccines you have received in one simple list.</p>
 
         <div class="tab-row" role="tablist">
-          <button class="tab is-selected" type="button">All</button>
-          <button class="tab" type="button">Pending</button>
+          <button class="tab is-selected" type="button" data-record-tab="all">All</button>
+          <button class="tab" type="button" data-record-tab="pending">Pending</button>
         </div>
 
-        <h3 class="block-title">Recent records</h3>
-        <button class="record-card" type="button" data-go="detail">
-          <span class="record-icon orange">💉</span>
-          <span>
-            <strong>Inactivated vaccine<br />for shingles<br />Dose 1</strong>
-            <small>2024/04/10　ABC Clinic</small>
-          </span>
-        </button>
-        <button class="record-card" type="button" data-go="detail">
-          <span class="record-icon red">💉</span>
-          <span>
-            <strong>Inactivated vaccine<br />for influenza</strong>
-            <small>2023/10/20　ABC Clinic</small>
-          </span>
-        </button>
-        <button class="record-card" type="button" data-go="detail">
-          <span class="record-icon blue">💉</span>
-          <span>
-            <strong>Inactivated vaccine<br />for pneumococcal disease</strong>
-            <small>2023/06/15　ABC Clinic</small>
-          </span>
-        </button>
+        <div data-record-panel="all">
+          <h3 class="block-title">Recent records</h3>
+          <button class="record-card" type="button" data-go="detail">
+            <span class="record-icon orange">💉</span>
+            <span>
+              <strong>Inactivated vaccine<br />for shingles<br />Dose 1</strong>
+              <small>2024/04/10　ABC Clinic</small>
+            </span>
+          </button>
+          <button class="record-card" type="button" data-go="detail">
+            <span class="record-icon red">💉</span>
+            <span>
+              <strong>Inactivated vaccine<br />for influenza</strong>
+              <small>2023/10/20　ABC Clinic</small>
+            </span>
+          </button>
+          <button class="record-card" type="button" data-go="detail">
+            <span class="record-icon blue">💉</span>
+            <span>
+              <strong>Inactivated vaccine<br />for pneumococcal disease</strong>
+              <small>2023/06/15　ABC Clinic</small>
+            </span>
+          </button>
+        </div>
+
+        <div class="is-hidden" data-record-panel="pending">
+          <h3 class="block-title">Pending record</h3>
+          <button class="record-card is-draft" type="button" data-go="add">
+            <span class="record-icon blue">✎</span>
+            <span>
+              <span class="status-pill">Draft</span>
+              <strong>RSV vaccine record<br />details in progress</strong>
+              <small>Vaccination date and clinic are not entered yet</small>
+            </span>
+          </button>
+        </div>
 
         <button class="primary-button" type="button" data-go="add">Add a vaccination record</button>
 
@@ -770,6 +802,8 @@
       const screens = Array.from(document.querySelectorAll(".screen"));
       const navItems = Array.from(document.querySelectorAll(".nav-item"));
       const goButtons = Array.from(document.querySelectorAll("[data-go]"));
+      const recordTabs = Array.from(document.querySelectorAll("[data-record-tab]"));
+      const recordPanels = Array.from(document.querySelectorAll("[data-record-panel]"));
       const diseaseTitle = document.getElementById("disease_title");
       const diseaseIcon = document.getElementById("disease_icon");
       const diseaseText = document.getElementById("disease_text");
@@ -822,6 +856,18 @@
 
       goButtons.forEach((button) => {
         button.addEventListener("click", () => showScreen(button.dataset.go));
+      });
+
+      recordTabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          recordTabs.forEach((item) => {
+            item.classList.toggle("is-selected", item === tab);
+          });
+
+          recordPanels.forEach((panel) => {
+            panel.classList.toggle("is-hidden", panel.dataset.recordPanel !== tab.dataset.recordTab);
+          });
+        });
       });
 
       document.querySelector("[data-show-more-diseases]").addEventListener("click", (event) => {
