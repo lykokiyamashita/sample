@@ -457,18 +457,22 @@
 
       .quick-actions {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1fr;
         gap: 10px;
       }
 
-      .quick-actions button {
+      .quick-actions a {
         min-height: 82px;
+        display: grid;
+        place-items: center;
         border: 1px solid var(--line);
         border-radius: 14px;
         background: #fbfdff;
         color: var(--blue);
         font-size: 11px;
         font-weight: 900;
+        text-align: center;
+        text-decoration: none;
       }
 
       .modal-backdrop {
@@ -778,9 +782,7 @@
         </div>
 
         <div class="quick-actions">
-          <button type="button">Review schedule</button>
-          <button type="button">Check clinic</button>
-          <button type="button">Open handbook</button>
+          <a href="https://map.yahoo.co.jp/">Check クリニック</a>
         </div>
       </section>
 
