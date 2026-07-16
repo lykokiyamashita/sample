@@ -123,6 +123,10 @@
         display: block;
       }
 
+      .is-hidden {
+        display: none !important;
+      }
+
       @keyframes enter {
         from {
           opacity: 0;
@@ -572,9 +576,16 @@
               <small>Overview of causes and symptoms</small>
             </span>
           </button>
+          <button class="disease-card is-hidden" type="button" data-disease="rsv">
+            <span class="vaccine-icon blue">🌬</span>
+            <span>
+              <strong>RSV</strong>
+              <small>Overview of causes and symptoms</small>
+            </span>
+          </button>
         </div>
 
-        <button class="text-link" type="button">View all diseases</button>
+        <button class="text-link" type="button" data-show-more-diseases>View all diseases</button>
 
         <aside class="info-box">
           <span>i</span>
@@ -787,6 +798,12 @@
           icon: "☀",
           color: "orange",
           text: "COVID-19 is an infection caused by the coronavirus. It may involve symptoms such as fever, cough, sore throat, and fatigue."
+        },
+        rsv: {
+          title: "RSV",
+          icon: "🌬",
+          color: "blue",
+          text: "RSV is a common respiratory virus. It usually causes cold-like symptoms, but it can lead to more serious respiratory illness in infants and older adults."
         }
       };
 
@@ -805,6 +822,11 @@
 
       goButtons.forEach((button) => {
         button.addEventListener("click", () => showScreen(button.dataset.go));
+      });
+
+      document.querySelector("[data-show-more-diseases]").addEventListener("click", (event) => {
+        document.querySelector('[data-disease="rsv"]').classList.remove("is-hidden");
+        event.currentTarget.classList.add("is-hidden");
       });
 
       document.querySelectorAll(".disease-card").forEach((card) => {
