@@ -120,6 +120,12 @@
         line-height: 1.35;
       }
 
+      .hero-card h2 {
+        font-size: clamp(30px, 9vw, 42px);
+        line-height: 1.16;
+        letter-spacing: -0.04em;
+      }
+
       .hero-card p:last-child,
       .lead,
       .form-card p,
@@ -629,11 +635,11 @@
       </section>
 
       <section class="screen" data-screen="records" aria-label="Vaccination records">
-        <div class="screen-title-row">
+        <div class="hero-card">
           <p class="section-label">Vaccination Records</p>
           <h2>Your vaccination records</h2>
+          <p>Review the vaccines you have received in one simple list.</p>
         </div>
-        <p class="lead">Review the vaccines you have received in one simple list.</p>
 
         <div class="tab-row" role="tablist">
           <button class="tab is-selected" type="button" data-record-tab="all">All</button>
@@ -686,8 +692,10 @@
       </section>
 
       <section class="screen" data-screen="add" aria-label="Add vaccination record">
-        <div class="screen-title-row">
+        <div class="hero-card">
+          <p class="section-label">Record Entry</p>
           <h2>Add a vaccination record</h2>
+          <p>Enter the details of the vaccination you received and keep your history organized.</p>
         </div>
 
         <div class="tab-row">
@@ -696,7 +704,6 @@
         </div>
 
         <form class="form-card">
-          <p>Enter the details of the vaccination you received.</p>
           <label>
             <span>Product category</span>
             <select>
